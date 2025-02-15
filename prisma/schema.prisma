@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MEMBER
+  ADMIN
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+  @@map("verification_tokens")
+}
+
+model User {
+  id String @id @default(cuid())
+
+  avatarUrl String? @map("avatar_url")
+  email     String  @unique
+  role      Role    @default(MEMBER)
+  maxStreak Int     @default(1)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  accounts Account[]
+  View     View[]
+  Streak   Streak[]
+
+  @@map("users")
+}
+
+model Post {
+  id String @id @default(cuid())
+
+  views View[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("posts")
+}
+
+model View {
+  id Int @id @default(autoincrement())
+
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  utmChannel  String?
+  postId      String
+  post        Post    @relation(fields: [postId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, postId])
+  @@map("views")
+}
+
+model Streak {
+  id             Int      @id @default(autoincrement())
+  lastStreakDate DateTime @map("last_streak_date")
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([lastStreakDate])
+  @@map("streaks")
+}
+
+model Level {
+  id            Int    @id @default(autoincrement())
+  name          String
+  description   String
+  minStreakDays Int    @default(0) @map("min_streak_days")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("levels")
+}
