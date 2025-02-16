@@ -1,7 +1,18 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  redirects: async () => [
+    {
+      source: '/auth',
+      destination: '/auth/login',
+      permanent: true,
+    },
+    {
+      source: '/login',
+      destination: '/auth/login',
+      permanent: true,
+    },
+  ],
+}
 
-export default nextConfig;
+export default nextConfig

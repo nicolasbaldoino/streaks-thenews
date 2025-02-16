@@ -12,26 +12,6 @@ enum Role {
   ADMIN
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
-}
-
 model VerificationToken {
   identifier String
   token      String
@@ -42,19 +22,17 @@ model VerificationToken {
 }
 
 model User {
-  id String @id @default(cuid())
-
-  avatarUrl String? @map("avatar_url")
-  email     String  @unique
-  role      Role    @default(MEMBER)
-  maxStreak Int     @default(1)
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime? @map("email_verified")
+  role          Role      @default(MEMBER)
+  maxStreak     Int       @default(1)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  accounts Account[]
-  View     View[]
-  Streak   Streak[]
+  View   View[]
+  Streak Streak[]
 
   @@map("users")
 }
