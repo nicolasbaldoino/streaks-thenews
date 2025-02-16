@@ -24,6 +24,9 @@ export default withAuth(
         },
         token,
       }) => {
+        if (pathname.startsWith('/api/webhooks') || pathname === '/')
+          return true
+
         // Redirect to /auth if not logged in
         if (!token?.sub && !pathname.startsWith('/auth')) return false
         return true

@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ message: 'Webhook received' })
   } catch (error) {
-    console.error(error)
+    console.error(`Webhook failed: ${error}`)
 
     return NextResponse.json({ message: 'Webhook failed' }, { status: 500 })
   }
