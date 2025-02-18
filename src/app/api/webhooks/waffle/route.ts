@@ -2,8 +2,8 @@ import { differenceInDays, isMonday, isSunday, startOfDay } from 'date-fns'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
+import { dailyStreaks } from '@/lib/daily-streaks'
 import { db } from '@/lib/db'
-import { streakDays } from '@/lib/streak-days'
 
 const inputSchema = z.object({
   email: z.string().email(),
@@ -76,7 +76,19 @@ export async function GET(request: NextRequest) {
         },
       })
 
-    await checkAndUpdateStreak(user.id, user.maxStreak)
+    const streakDays = await checkAndUpdateStreak(user.id)
+
+    // Update max streak if necessary (only if streakDays is higher than the current max)
+    if (streakDays && streakDays > user.maxStreak) {
+      await db.user.update({
+        where: { id: user.id },
+        data: { maxStreak: streakDays },
+      })
+    }
+
+    if (streakDays) {
+      console.log(`[LOG] User ${user.id} has a streak of ${streakDays} days!`)
+    }
 
     return NextResponse.json({ message: 'Webhook received' })
   } catch (error) {
@@ -86,7 +98,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-const checkAndUpdateStreak = async (userId: string, maxStreak: number) => {
+const checkAndUpdateStreak = async (userId: string) => {
   const today = startOfDay(new Date())
 
   if (isSunday(today)) return
@@ -100,24 +112,23 @@ const checkAndUpdateStreak = async (userId: string, maxStreak: number) => {
     const lastDate = startOfDay(new Date(lastStreak.lastStreakDate))
     const diffDays = differenceInDays(today, lastDate)
 
-    if (diffDays === 0) return
+    if (diffDays === 0) {
+      return dailyStreaks(lastStreak.lastStreakDate, lastStreak.createdAt)
+    }
 
     // If it's Monday and the last streak was Saturday, or if it was yesterday normally, continue the streak
     if (diffDays === 1 || (isMonday(today) && diffDays === 2)) {
-      const streak = await db.streak.update({
+      const newStreak = await db.streak.update({
         where: { id: lastStreak.id },
         data: { lastStreakDate: today },
       })
 
-      const days = streakDays(streak.lastStreakDate, streak.updatedAt)
+      const streakDays = dailyStreaks(
+        newStreak.lastStreakDate,
+        newStreak.createdAt,
+      )
 
-      if (days > maxStreak)
-        await db.user.update({
-          where: { id: userId },
-          data: { maxStreak: days },
-        })
-
-      return
+      return streakDays
     }
   }
 

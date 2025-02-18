@@ -35,8 +35,10 @@ const signInSchema = z.object({
 export const SignInForm = () => {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams?.get('callbackUrl')
+  const email = searchParams?.get('email')
 
   const form = useForm<z.infer<typeof signInSchema>>({
+    defaultValues: { email: email || '' },
     resolver: zodResolver(signInSchema),
   })
 
@@ -65,22 +67,22 @@ export const SignInForm = () => {
               Enter your email address to receive a magic link. 🪄
             </CardDescription>
 
-            {form.formState.errors.root?.message && (
-              <Alert variant="destructive">
-                <AlertTriangle className="size-4" />
-                <AlertTitle>Login failed</AlertTitle>
-                <AlertDescription>
-                  <p>{form.formState.errors.root?.message}</p>
-                </AlertDescription>
-              </Alert>
-            )}
-
             {form.formState.isSubmitSuccessful && (
               <Alert className="border-green-500/50 text-green-500 dark:border-green-500 [&>svg]:text-green-500">
                 <MailCheck className="size-4" />
                 <AlertTitle>Sent!</AlertTitle>
                 <AlertDescription>
                   <p>Check your email for the magic link!</p>
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {form.formState.errors.root?.message && (
+              <Alert variant="destructive">
+                <AlertTriangle className="size-4" />
+                <AlertTitle>Login failed</AlertTitle>
+                <AlertDescription>
+                  <p>{form.formState.errors.root?.message}</p>
                 </AlertDescription>
               </Alert>
             )}

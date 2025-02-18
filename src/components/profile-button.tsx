@@ -1,17 +1,20 @@
 import { ChevronDown } from 'lucide-react'
+import Link from 'next/link'
 import { getServerSession } from 'next-auth'
 
 import { authConfig } from '@/lib/auth-config'
+import { cn } from '@/lib/utils'
 
 import { SignOutButton } from './sign-out-button'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { buttonVariants } from './ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 
-function getInitials(name: string): string {
+const getInitials = (name: string): string => {
   const initials = name
     .split(' ')
     .map((word) => word.charAt(0).toUpperCase())
@@ -21,11 +24,15 @@ function getInitials(name: string): string {
   return initials
 }
 
-export async function ProfileButton() {
+export const ProfileButton = async () => {
   const session = await getServerSession(authConfig)
 
   if (!session?.user) {
-    return null
+    return (
+      <Link href="/auth" className={cn(buttonVariants({ size: 'sm' }))}>
+        Sign In
+      </Link>
+    )
   }
 
   return (
