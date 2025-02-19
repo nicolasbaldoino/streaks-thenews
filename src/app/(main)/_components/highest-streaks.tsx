@@ -4,8 +4,6 @@ import { db } from '@/lib/db'
 import { hideEmail } from '@/lib/utils'
 
 export const HighestStreaks = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 200000000))
-
   const users = await db.user.findMany({
     orderBy: {
       highestStreak: 'desc',
