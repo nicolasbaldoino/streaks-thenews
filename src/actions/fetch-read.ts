@@ -1,3 +1,5 @@
+'use server'
+
 export const fetchRead = async ({
   email,
 }: {

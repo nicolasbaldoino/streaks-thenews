@@ -26,7 +26,7 @@ model User {
   email         String    @unique
   emailVerified DateTime? @map("email_verified")
   role          Role      @default(MEMBER)
-  maxStreak     Int       @default(1)
+  highestStreak Int       @default(1) @map("highest_streak")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -82,7 +82,7 @@ model Streak {
   @@map("streaks")
 }
 
-model Level {
+model Rank {
   id            Int    @id @default(autoincrement())
   name          String
   description   String
@@ -91,5 +91,5 @@ model Level {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("levels")
+  @@map("ranks")
 }

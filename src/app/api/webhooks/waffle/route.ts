@@ -78,11 +78,11 @@ export async function GET(request: NextRequest) {
 
     const streakDays = await checkAndUpdateStreak(user.id)
 
-    // Update max streak if necessary (only if streakDays is higher than the current max)
-    if (streakDays && streakDays > user.maxStreak) {
+    // Update highest streak if necessary (only if streakDays is higher than the current highest streak)
+    if (streakDays && streakDays > user.highestStreak) {
       await db.user.update({
         where: { id: user.id },
-        data: { maxStreak: streakDays },
+        data: { highestStreak: streakDays },
       })
     }
 

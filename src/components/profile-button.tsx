@@ -3,11 +3,10 @@ import Link from 'next/link'
 import { getServerSession } from 'next-auth'
 
 import { authConfig } from '@/lib/auth-config'
-import { cn } from '@/lib/utils'
 
 import { SignOutButton } from './sign-out-button'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { buttonVariants } from './ui/button'
+import { Button } from './ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,9 +28,9 @@ export const ProfileButton = async () => {
 
   if (!session?.user) {
     return (
-      <Link href="/auth" className={cn(buttonVariants({ size: 'sm' }))}>
-        Sign In
-      </Link>
+      <Button asChild size="sm">
+        <Link href="/auth">Sign In</Link>
+      </Button>
     )
   }
 
