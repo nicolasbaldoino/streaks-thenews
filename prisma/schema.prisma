@@ -26,7 +26,7 @@ model User {
   email         String    @unique
   emailVerified DateTime? @map("email_verified")
   role          Role      @default(MEMBER)
-  highestStreak Int       @default(1) @map("highest_streak")
+  highestStreak Int       @default(0) @map("highest_streak")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

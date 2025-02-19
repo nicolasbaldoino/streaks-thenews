@@ -1,4 +1,4 @@
-import { Streak } from '@prisma/client'
+import { Rank, Streak } from '@prisma/client'
 import { CalendarCheck, Flame, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { getServerSession } from 'next-auth'
@@ -13,15 +13,18 @@ import { db } from '@/lib/db'
 import { cn, hideEmail } from '@/lib/utils'
 
 import { Newsletter } from './_components/newsletter'
+import { Posts } from './_components/posts'
 
 export default async function Page() {
   const session = await getServerSession(authConfig)
 
+  let rank: Rank | null = null
   let streaks: Streak[] = []
   let activeStreakDays = 10
   let highestStreak = 10
   let currentStreak = 10
 
+  // Only fetch data if user is signed in
   if (session?.user?.email) {
     streaks = await db.streak.findMany({
       where: {
@@ -57,6 +60,17 @@ export default async function Page() {
       new Date(streaks[0]?.lastStreakDate),
       new Date(streaks[0]?.createdAt),
     )
+
+    rank = await db.rank.findFirst({
+      where: {
+        minStreakDays: {
+          lte: currentStreak,
+        },
+      },
+      orderBy: {
+        minStreakDays: 'desc',
+      },
+    })
   }
 
   const users = await db.user.findMany({
@@ -151,9 +165,29 @@ export default async function Page() {
             <CardHeader>
               <CardTitle className="text-xl">Overview</CardTitle>
             </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <div className="text-sm font-medium">Current Rank</div>
+                  {
+                    <div
+                      className={cn(
+                        'text-xl font-semibold',
+                        !session?.user &&
+                          'pointer-events-none select-none blur-sm',
+                      )}
+                    >
+                      {rank?.name ?? 'Unranked'}
+                    </div>
+                  }
+                </div>
+              </div>
+            </CardContent>
           </Card>
 
           <Newsletter email={session?.user?.email} />
+
+          <Posts />
         </div>
         <div className="max-w-[25rem] space-y-4">
           <Card className="min-w-max max-w-[25rem]">
