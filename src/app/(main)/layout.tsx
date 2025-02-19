@@ -11,7 +11,9 @@ export default function Layout({
       <Header />
 
       <main className="mx-auto w-full max-w-[1200px] space-y-4">
-        <Separator />
+        <div className="px-0 md:px-4">
+          <Separator />
+        </div>
 
         {children}
       </main>

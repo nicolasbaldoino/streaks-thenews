@@ -17,7 +17,7 @@ export const Posts = async () => {
           </div>
         </div>
       )}
-      <div className="mx-auto grid w-full max-w-screen-lg grid-cols-1 gap-4 px-3 py-6 md:grid-cols-3 lg:px-4 xl:px-0">
+      <div className="mx-auto grid w-full max-w-screen-lg grid-cols-1 gap-4 py-6 sm:grid-cols-3 xl:px-0">
         {posts.map((post) => (
           <a
             key={post.id}
