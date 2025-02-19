@@ -146,7 +146,7 @@ export const StreakCalendar = ({ streaks }: { streaks: Streak[] }) => {
               'flex items-center justify-center rounded-md text-sm',
               !day.isCurrentMonth && 'text-muted-foreground opacity-50',
               day.isStreak &&
-                'bg-green-500/20 text-green-700 dark:text-green-400',
+                'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400',
               // day.isMissed && 'bg-red-500/20 text-red-700 dark:text-red-400',
               !day.isWithinValidRange && 'opacity-25',
               isSunday(day.date) &&

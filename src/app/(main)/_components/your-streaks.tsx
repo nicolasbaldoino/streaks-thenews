@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { StreakCalendar } from '@/components/streak-calendar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { DEMO_STREAKS } from '@/lib/demo'
 
 export const YourStreaks = async ({
   loggedIn,
@@ -31,7 +32,7 @@ export const YourStreaks = async ({
               </Button>
             </div>
             <div className="pointer-events-none select-none opacity-30 blur-sm">
-              <StreakCalendar streaks={[]} />
+              <StreakCalendar streaks={DEMO_STREAKS} />
             </div>
           </>
         )}

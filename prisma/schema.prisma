@@ -82,7 +82,7 @@ model Streak {
   @@map("streaks")
 }
 
-model Rank {
+model Level {
   id            Int    @id @default(autoincrement())
   name          String
   description   String
@@ -91,5 +91,5 @@ model Rank {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("ranks")
+  @@map("levels")
 }

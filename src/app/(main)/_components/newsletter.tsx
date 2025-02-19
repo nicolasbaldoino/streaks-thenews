@@ -37,10 +37,11 @@ export const Newsletter = async () => {
         )}
         <form action={subscribe} className="mb-4 flex items-center">
           <Input
+            className="flex-1"
             name="email"
             type="email"
+            required
             placeholder="Enter your email"
-            className="flex-1"
           />
           <Button size="sm" type="submit" className="ml-2">
             Subscribe

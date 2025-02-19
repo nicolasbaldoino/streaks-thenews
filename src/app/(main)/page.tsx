@@ -148,7 +148,7 @@ export default async function Page() {
           </div>
         </div>
 
-        <Overview currentStreak={currentStreak} />
+        <Overview streaks={streaks} currentStreak={currentStreak} />
 
         <Newsletter />
 
