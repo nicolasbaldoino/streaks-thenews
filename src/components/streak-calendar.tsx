@@ -23,10 +23,10 @@ export const StreakCalendar = ({ streaks }: { streaks: Streak[] }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [currentDate, setCurrentDate] = useState(new Date())
 
-  // Find the earliest createdAt date
+  // Find the earliest startStreakDate date
   const earliestDate = streaks.reduce((earliest, streak) => {
-    const createdAt = new Date(streak.createdAt)
-    return createdAt < earliest ? createdAt : earliest
+    const startStreakDate = new Date(streak.startStreakDate)
+    return startStreakDate < earliest ? startStreakDate : earliest
   }, new Date())
 
   // Set the valid date range
@@ -59,7 +59,7 @@ export const StreakCalendar = ({ streaks }: { streaks: Streak[] }) => {
   const processedDays = new Set()
 
   streaks.forEach((streak) => {
-    const startDate = new Date(streak.createdAt)
+    const startDate = new Date(streak.startStreakDate)
     const endDate = new Date(streak.lastStreakDate)
     let currentDay = startDate
 

@@ -17,7 +17,7 @@ export const CurrentGoal = ({ streaks }: { streaks: Streak[] }) => {
   // Calculate completed days this week
   const completedDays = weekDays.filter((day) => {
     return streaks.some((streak) => {
-      const streakStart = new Date(streak.createdAt)
+      const streakStart = new Date(streak.startStreakDate)
       const streakEnd = new Date(streak.lastStreakDate)
       return isWithinInterval(day, { start: streakStart, end: streakEnd })
     })

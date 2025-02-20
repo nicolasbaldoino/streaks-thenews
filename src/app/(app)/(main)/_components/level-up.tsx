@@ -27,23 +27,21 @@ const getLevelData = (email: string): LevelData | null => {
 }
 
 export const LevelUp = ({
-  email,
   currentLevel,
   nextLevel,
 }: {
-  email: string
   currentLevel: Level
   nextLevel?: Level
 }) => {
   const { data: session } = useSession()
   const [clicked, setClicked] = useState(false)
 
-  if (!session?.user) return null
+  if (!session?.user?.email) return null
 
-  const savedData = getLevelData(email)
+  const savedData = getLevelData(session.user.email)
 
   if (!savedData) {
-    saveLevelData(email, {
+    saveLevelData(session.user.email, {
       currentLevelId: currentLevel.id,
       nextLevelId: nextLevel?.id,
     })
@@ -52,7 +50,7 @@ export const LevelUp = ({
   }
 
   const handleClick = () => {
-    const end = Date.now() + 3 * 1000 // 3 seconds
+    const end = Date.now() + 2 * 1000 // 1 seconds
     const colors = ['#a786ff', '#fd8bbc', '#eca184', '#f8deb1']
 
     const frame = () => {
@@ -80,11 +78,13 @@ export const LevelUp = ({
 
     frame()
 
-    // Update saved data
-    saveLevelData(email, {
-      currentLevelId: currentLevel.id,
-      nextLevelId: nextLevel?.id,
-    })
+    if (session.user?.email) {
+      // Update saved data
+      saveLevelData(session.user.email, {
+        currentLevelId: currentLevel.id,
+        nextLevelId: nextLevel?.id,
+      })
+    }
     setClicked(true)
   }
 
@@ -94,7 +94,7 @@ export const LevelUp = ({
     !clicked
   ) {
     return (
-      <Button onClick={handleClick} size="sm">
+      <Button onClick={handleClick} size="sm" className="mt-2">
         🎉 Level Up!
       </Button>
     )
@@ -102,7 +102,7 @@ export const LevelUp = ({
     currentLevel.id !== savedData.currentLevelId &&
     nextLevel?.id !== savedData.nextLevelId
   ) {
-    saveLevelData(email, {
+    saveLevelData(session.user.email, {
       currentLevelId: currentLevel.id,
       nextLevelId: nextLevel?.id,
     })

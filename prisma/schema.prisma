@@ -51,14 +51,14 @@ model Post {
 model View {
   id Int @id @default(autoincrement())
 
-  utmSource   String?
-  utmMedium   String?
-  utmCampaign String?
-  utmChannel  String?
-  postId      String
+  utmSource   String? @map("utm_source")
+  utmMedium   String? @map("utm_medium")
+  utmCampaign String? @map("utm_campaign")
+  utmChannel  String? @map("utm_channel")
+  postId      String  @map("post_id")
   post        Post    @relation(fields: [postId], references: [id])
 
-  userId String
+  userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -69,10 +69,11 @@ model View {
 }
 
 model Streak {
-  id             Int      @id @default(autoincrement())
-  lastStreakDate DateTime @map("last_streak_date")
+  id              Int      @id @default(autoincrement())
+  startStreakDate DateTime @map("start_streak_date")
+  lastStreakDate  DateTime @map("last_streak_date")
 
-  userId String
+  userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at")

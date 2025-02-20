@@ -113,7 +113,7 @@ const checkAndUpdateStreak = async (userId: string) => {
     const diffDays = differenceInDays(today, lastDate)
 
     if (diffDays === 0) {
-      return dailyStreaks(lastStreak.lastStreakDate, lastStreak.createdAt)
+      return dailyStreaks(lastStreak.lastStreakDate, lastStreak.startStreakDate)
     }
 
     // If it's Monday and the last streak was Saturday, or if it was yesterday normally, continue the streak
@@ -125,7 +125,7 @@ const checkAndUpdateStreak = async (userId: string) => {
 
       const streakDays = dailyStreaks(
         newStreak.lastStreakDate,
-        newStreak.createdAt,
+        newStreak.startStreakDate,
       )
 
       return streakDays
@@ -133,6 +133,10 @@ const checkAndUpdateStreak = async (userId: string) => {
   }
 
   await db.streak.create({
-    data: { userId, lastStreakDate: today },
+    data: {
+      userId,
+      startStreakDate: today,
+      lastStreakDate: today,
+    },
   })
 }

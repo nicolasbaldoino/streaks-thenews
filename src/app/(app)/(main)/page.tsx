@@ -8,10 +8,10 @@ import { dailyStreaks } from '@/lib/daily-streaks'
 import { db } from '@/lib/db'
 import { cn } from '@/lib/utils'
 
-import { HighestStreaks } from './_components/highest-streaks'
 import { Newsletter } from './_components/newsletter'
 import { Overview } from './_components/overview'
 import { Posts } from './_components/posts'
+import { TopStreaks } from './_components/top-streaks'
 import { YourStreaks } from './_components/your-streaks'
 
 export default async function Page() {
@@ -27,8 +27,7 @@ export default async function Page() {
     streaks = await db.streak.findMany({
       where: {
         user: {
-          // email: session.user.email,
-          email: 'teste4@exemplo.com',
+          email: session.user.email,
         },
       },
       orderBy: {
@@ -41,7 +40,7 @@ export default async function Page() {
         total +
         dailyStreaks(
           new Date(streak.lastStreakDate),
-          new Date(streak.createdAt),
+          new Date(streak.startStreakDate),
         )
       )
     }, 0)
@@ -49,14 +48,14 @@ export default async function Page() {
     highestStreak = streaks.reduce((longest, streak) => {
       const streakLength = dailyStreaks(
         new Date(streak.lastStreakDate),
-        new Date(streak.createdAt),
+        new Date(streak.startStreakDate),
       )
       return streakLength > longest ? streakLength : longest
     }, 0)
 
     currentStreak = dailyStreaks(
       new Date(streaks[0]?.lastStreakDate),
-      new Date(streaks[0]?.createdAt),
+      new Date(streaks[0]?.startStreakDate),
     )
   }
 
@@ -144,7 +143,7 @@ export default async function Page() {
           <YourStreaks loggedIn={Boolean(session?.user)} streaks={streaks} />
 
           <div className="flex-1">
-            <HighestStreaks />
+            <TopStreaks />
           </div>
         </div>
 
@@ -158,7 +157,7 @@ export default async function Page() {
       <div className="hidden max-w-[25rem] flex-col space-y-4 lg:flex">
         <YourStreaks loggedIn={Boolean(session?.user)} streaks={streaks} />
 
-        <HighestStreaks />
+        <TopStreaks />
       </div>
     </div>
   )
