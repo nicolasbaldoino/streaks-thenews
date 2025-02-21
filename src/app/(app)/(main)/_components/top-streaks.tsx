@@ -19,7 +19,7 @@ export const TopStreaks = async () => {
         <CardTitle className="text-xl">🔥 Top Streaks</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
+        <div className="space-y-3">
           {users.length === 0 && (
             <div className="py-4 text-center">No users with streaks found</div>
           )}

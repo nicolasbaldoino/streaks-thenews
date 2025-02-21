@@ -87,7 +87,6 @@ model Streak {
 model Level {
   id            Int    @id @default(autoincrement())
   name          String
-  description   String
   minStreakDays Int    @default(0) @map("min_streak_days")
 
   createdAt DateTime @default(now()) @map("created_at")

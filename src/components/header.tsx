@@ -1,9 +1,6 @@
-import { Role } from '@prisma/client'
 import Link from 'next/link'
-import { getServerSession } from 'next-auth'
 
-import { authConfig } from '@/lib/auth-config'
-import { db } from '@/lib/db'
+import { currentUser } from '@/lib/current-user'
 
 import { HeaderButtons } from './header-buttons'
 import { ProfileButton } from './profile-button'
@@ -11,22 +8,7 @@ import { ThemeSwitcher } from './theme-switcher'
 import { Separator } from './ui/separator'
 
 export const Header = async () => {
-  const session = await getServerSession(authConfig)
-
-  let role: Role | undefined
-
-  if (session?.user?.email) {
-    const user = await db.user.findUnique({
-      where: {
-        email: session?.user?.email,
-      },
-      select: {
-        role: true,
-      },
-    })
-
-    role = user?.role
-  }
+  const user = await currentUser()
 
   return (
     <div className="mx-auto flex max-w-[1200px] items-center justify-between px-4">
@@ -35,7 +17,7 @@ export const Header = async () => {
           streaks 🔥
         </Link>
 
-        {role === 'ADMIN' && <HeaderButtons />}
+        {user?.role === 'ADMIN' && <HeaderButtons />}
       </div>
 
       <div className="flex items-center gap-4">

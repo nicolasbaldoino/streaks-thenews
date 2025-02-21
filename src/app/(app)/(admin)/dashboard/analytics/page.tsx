@@ -172,7 +172,7 @@ export default async function Page() {
   const totalInactiveStreaks = totalStreaks.length - totalActiveStreaks
 
   return (
-    <div className="flex flex-col gap-4 px-4">
+    <div className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         <Card>
           <div className="flex items-start justify-between space-x-4 p-6">
