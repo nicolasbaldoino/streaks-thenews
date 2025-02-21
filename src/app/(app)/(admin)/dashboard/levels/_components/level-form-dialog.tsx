@@ -31,7 +31,7 @@ import { useToast } from '@/hooks/use-toast'
 import { cn } from '@/lib/utils'
 
 const formSchema = z.object({
-  name: z.string().nonempty().min(3).max(255),
+  name: z.string().trim().nonempty().min(3).max(255),
   minStreakDays: z.coerce.number().nonnegative().default(0),
 })
 

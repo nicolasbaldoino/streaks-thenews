@@ -19,7 +19,7 @@ export const HeaderButtons = () => {
       </Button>
       <Button
         asChild
-        variant={pathname === '/dashboard' ? 'secondary' : 'ghost'}
+        variant={pathname.startsWith('/dashboard') ? 'secondary' : 'ghost'}
         size="sm"
       >
         <Link href="/dashboard">Dashboard</Link>
