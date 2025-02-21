@@ -1,4 +1,5 @@
-import { BarChart, Eye, Flame, Users } from 'lucide-react'
+import { isMonday, startOfDay, subDays } from 'date-fns'
+import { Eye, Flame, PauseCircle, Users } from 'lucide-react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -11,10 +12,9 @@ import { ViewsBySource } from './_components/views-by-source'
 
 export default async function Page() {
   const [
-    totalActiveStreaks,
+    totalStreaks,
     totalViews,
     totalUsers,
-    totalLevels,
     topHighestStreaksByUser,
     topViewsByUser,
     topPostsByViews,
@@ -23,16 +23,11 @@ export default async function Page() {
     viewsByCampaign,
     viewsByChannel,
   ] = await Promise.all([
-    // Total Active Streaks (count)
+    // Total Streaks (count)
     db.streak.groupBy({
       by: ['userId'],
-      where: {
-        lastStreakDate: {
-          gte: new Date(new Date().setDate(new Date().getDate() - 1)),
-        },
-      },
       _max: {
-        createdAt: true,
+        lastStreakDate: true,
       },
     }),
 
@@ -41,9 +36,6 @@ export default async function Page() {
 
     // Total Users (count)
     db.user.count(),
-
-    // Total Levels (count)
-    db.level.count(),
 
     // Top Highest Streaks by User (limit)
     db.user.findMany({
@@ -90,7 +82,7 @@ export default async function Page() {
       },
       where: {
         createdAt: {
-          gte: new Date(new Date().setDate(new Date().getDate() - 30)),
+          gte: subDays(new Date(), 90),
         },
       },
       orderBy: {
@@ -106,7 +98,7 @@ export default async function Page() {
       },
       where: {
         createdAt: {
-          gte: new Date(new Date().setDate(new Date().getDate() - 30)),
+          gte: subDays(new Date(), 90),
         },
       },
       orderBy: {
@@ -122,7 +114,7 @@ export default async function Page() {
       },
       where: {
         createdAt: {
-          gte: new Date(new Date().setDate(new Date().getDate() - 30)),
+          gte: subDays(new Date(), 90),
         },
       },
       orderBy: {
@@ -138,7 +130,7 @@ export default async function Page() {
       },
       where: {
         createdAt: {
-          gte: new Date(new Date().setDate(new Date().getDate() - 30)),
+          gte: subDays(new Date(), 90),
         },
       },
       orderBy: {
@@ -166,6 +158,19 @@ export default async function Page() {
   //     ) >= 7,
   // ).length
 
+  const today = startOfDay(new Date())
+  const yesterday = subDays(today, 1)
+  const beforeYesterday = subDays(today, 2)
+
+  const totalActiveStreaks = totalStreaks.filter(
+    ({ _max: { lastStreakDate } }) =>
+      lastStreakDate &&
+      (lastStreakDate >= yesterday ||
+        (isMonday(today) && lastStreakDate >= beforeYesterday)),
+  ).length
+
+  const totalInactiveStreaks = totalStreaks.length - totalActiveStreaks
+
   return (
     <div className="flex flex-col gap-4 px-4">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -176,13 +181,31 @@ export default async function Page() {
 
               <div>
                 <div className="text-xl font-semibold">
-                  {totalActiveStreaks.length}
+                  {totalActiveStreaks}
                 </div>
               </div>
             </div>
 
             <div className="rounded-lg bg-secondary p-2">
               <Flame className="size-6 text-muted-foreground" />
+            </div>
+          </div>
+        </Card>
+
+        <Card>
+          <div className="flex items-start justify-between space-x-4 p-6">
+            <div>
+              <div className="text-sm font-medium">Total Inactive Streaks</div>
+
+              <div>
+                <div className="text-xl font-semibold">
+                  {totalInactiveStreaks}
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-lg bg-secondary p-2">
+              <PauseCircle className="size-6 text-muted-foreground" />
             </div>
           </div>
         </Card>
@@ -215,22 +238,6 @@ export default async function Page() {
 
             <div className="rounded-lg bg-secondary p-2">
               <Users className="size-6 text-muted-foreground" />
-            </div>
-          </div>
-        </Card>
-
-        <Card>
-          <div className="flex items-start justify-between space-x-4 p-6">
-            <div>
-              <div className="text-sm font-medium">Total Levels</div>
-
-              <div>
-                <div className="text-xl font-semibold">{totalLevels}</div>
-              </div>
-            </div>
-
-            <div className="rounded-lg bg-secondary p-2">
-              <BarChart className="size-6 text-muted-foreground" />
             </div>
           </div>
         </Card>

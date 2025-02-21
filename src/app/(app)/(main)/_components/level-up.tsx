@@ -3,7 +3,7 @@
 import { Level } from '@prisma/client'
 import confetti from 'canvas-confetti'
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
+import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
 
@@ -34,7 +34,7 @@ export const LevelUp = ({
   nextLevel?: Level
 }) => {
   const { data: session } = useSession()
-  const [clicked, setClicked] = useState(false)
+  const [clicked, setClicked] = React.useState(false)
 
   if (!session?.user?.email) return null
 

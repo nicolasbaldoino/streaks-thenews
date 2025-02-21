@@ -14,14 +14,14 @@ import {
   subMonths,
 } from 'date-fns'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useState } from 'react'
+import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 export const StreakCalendar = ({ streaks }: { streaks: Streak[] }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [currentDate, setCurrentDate] = useState(new Date())
+  const [currentDate, setCurrentDate] = React.useState(new Date())
 
   // Find the earliest startStreakDate date
   const earliestDate = streaks.reduce((earliest, streak) => {
