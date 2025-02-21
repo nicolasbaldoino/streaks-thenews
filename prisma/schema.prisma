@@ -28,8 +28,8 @@ model User {
   role          Role      @default(MEMBER)
   highestStreak Int       @default(0) @map("highest_streak")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
   View   View[]
   Streak Streak[]
@@ -42,8 +42,8 @@ model Post {
 
   views View[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@map("posts")
 }
@@ -62,8 +62,8 @@ model View {
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id])
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@unique([userId, postId])
   @@map("views")
@@ -77,8 +77,8 @@ model Streak {
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id])
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@index([lastStreakDate])
   @@map("streaks")
@@ -89,8 +89,8 @@ model Level {
   name          String
   minStreakDays Int    @default(0) @map("min_streak_days")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@map("levels")
 }
