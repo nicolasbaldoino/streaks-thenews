@@ -50,20 +50,26 @@ export const StreakCalendar = ({ streaks }: { streaks: Streak[] }) => {
     date: Date
     isCurrentMonth: boolean
     isStreak: boolean
+    isCurrentStreak: boolean
     isWithinValidRange: boolean
   }[] = []
   let day = weekStart
 
   // Process streak periods to determine active days
+  const currentStreakDays = new Set()
   const activeStreakDays = new Set()
   const processedDays = new Set()
 
-  streaks.forEach((streak) => {
+  streaks.forEach((streak, idx) => {
     const startDate = new Date(streak.startStreakDate)
     const endDate = new Date(streak.lastStreakDate)
     let currentDay = startDate
 
     while (currentDay <= endDate) {
+      if (idx === 0) {
+        currentStreakDays.add(format(currentDay, 'yyyy-MM-dd'))
+      }
+
       activeStreakDays.add(format(currentDay, 'yyyy-MM-dd'))
       processedDays.add(format(currentDay, 'yyyy-MM-dd'))
       currentDay = addDays(currentDay, 1)
@@ -75,6 +81,7 @@ export const StreakCalendar = ({ streaks }: { streaks: Streak[] }) => {
     const dayStr = format(day, 'yyyy-MM-dd')
     const isCurrentMonth = isSameMonth(day, monthStart)
     const isStreak = activeStreakDays.has(dayStr)
+    const isCurrentStreak = currentStreakDays.has(dayStr)
     // const isMissed =
     //   isCurrentMonth &&
     //   !isStreak &&
@@ -86,6 +93,7 @@ export const StreakCalendar = ({ streaks }: { streaks: Streak[] }) => {
       date: day,
       isCurrentMonth,
       isStreak,
+      isCurrentStreak,
       // isMissed,
       isWithinValidRange,
     })
@@ -147,6 +155,8 @@ export const StreakCalendar = ({ streaks }: { streaks: Streak[] }) => {
               !day.isCurrentMonth && 'text-muted-foreground opacity-50',
               day.isStreak &&
                 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400',
+              day.isCurrentStreak &&
+                'bg-yellow-500/20 text-yellow-700 dark:text-yellow-400',
               // day.isMissed && 'bg-red-500/20 text-red-700 dark:text-red-400',
               !day.isWithinValidRange && 'opacity-25',
               isSunday(day.date) &&

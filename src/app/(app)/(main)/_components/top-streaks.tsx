@@ -14,12 +14,15 @@ export const TopStreaks = async () => {
   const users = await fetchTopUsers()
 
   return (
-    <Card className="w-full">
+    <Card className="w-full max-lg:h-full">
       <CardHeader>
         <CardTitle className="text-xl">🔥 Top Streaks</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
+          {users.length === 0 && (
+            <div className="py-4 text-center">No users with streaks found</div>
+          )}
           {users.map((user, i) => {
             const streakDays =
               user.streak?.startStreakDate && user.streak?.lastStreakDate

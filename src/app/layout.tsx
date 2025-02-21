@@ -1,7 +1,7 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono as GeistMono } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { getServerSession } from 'next-auth'
 import { ThemeProvider } from 'next-themes'
 
@@ -10,15 +10,7 @@ import { QueryClientProvider } from '@/components/query-client-provider'
 import { Toaster } from '@/components/ui/toaster'
 import { authConfig } from '@/lib/auth-config'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-})
-
-const geistMono = GeistMono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-})
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
@@ -39,9 +31,7 @@ export default async function RootLayout({
   return (
     <AuthProvider session={session}>
       <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={`${inter.className} antialiased`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

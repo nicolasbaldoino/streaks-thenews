@@ -82,8 +82,8 @@ export default async function Page() {
                 </div>
               </div>
 
-              <div className="rounded-lg bg-secondary p-2">
-                <CalendarCheck className="size-6 text-muted-foreground" />
+              <div className="rounded-lg bg-blue-500/20 p-2 text-blue-700 dark:text-blue-400">
+                <CalendarCheck className="size-6" />
               </div>
             </div>
           </Card>
@@ -107,8 +107,8 @@ export default async function Page() {
                 </div>
               </div>
 
-              <div className="rounded-lg bg-secondary p-2">
-                <Flame className="size-6 text-muted-foreground" />
+              <div className="rounded-lg bg-emerald-500/20 p-2 text-emerald-700 dark:text-emerald-400">
+                <Flame className="size-6" />
               </div>
             </div>
           </Card>
@@ -132,8 +132,8 @@ export default async function Page() {
                 </div>
               </div>
 
-              <div className="rounded-lg bg-secondary p-2">
-                <Zap className="size-6 text-muted-foreground" />
+              <div className="rounded-lg bg-yellow-500/20 p-2 text-yellow-700 dark:text-yellow-400">
+                <Zap className="size-6" />
               </div>
             </div>
           </Card>

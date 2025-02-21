@@ -55,8 +55,9 @@ model View {
   utmMedium   String? @map("utm_medium")
   utmCampaign String? @map("utm_campaign")
   utmChannel  String? @map("utm_channel")
-  postId      String  @map("post_id")
-  post        Post    @relation(fields: [postId], references: [id])
+
+  postId String @map("post_id")
+  post   Post   @relation(fields: [postId], references: [id])
 
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id])
