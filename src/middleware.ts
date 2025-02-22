@@ -24,7 +24,11 @@ export default withAuth(
         },
         token,
       }) => {
-        if (pathname.startsWith('/api/webhooks') || pathname === '/')
+        if (
+          pathname.startsWith('/posts') ||
+          pathname.startsWith('/api/webhooks') ||
+          pathname === '/'
+        )
           return true
 
         // Redirect to /auth if not logged in

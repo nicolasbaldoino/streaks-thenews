@@ -105,7 +105,19 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: 'role',
-    header: 'Role',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="-ml-4"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Role
+          <ArrowUpDown />
+        </Button>
+      )
+    },
     cell: ({ row }) => <CellUpdateRole item={row.original} />,
   },
 ]

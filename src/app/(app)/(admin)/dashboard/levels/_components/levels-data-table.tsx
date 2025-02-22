@@ -90,7 +90,19 @@ export const columns: ColumnDef<Level>[] = [
   },
   {
     accessorKey: 'minStreakDays',
-    header: 'Min Streak Days',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="-ml-4"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Min Streak Days
+          <ArrowUpDown />
+        </Button>
+      )
+    },
     cell: ({ row }) => (
       <div className="text-sm">{row.getValue('minStreakDays')}</div>
     ),

@@ -30,8 +30,28 @@ export interface Post {
     premium: {
       web: string
       email: string
-      rss: string
     }
+  }
+  stats: {
+    email: {
+      recipients: number
+      delivered: number
+      opens: number
+      unique_opens: number
+      clicks: number
+      unique_clicks: number
+      unsubscribes: number
+      spam_reports: number
+    }
+    web: {
+      views: number
+      clicks: number
+    }
+    clicks: {
+      total_clicks: number
+      total_unique_clicks: number
+      total_click_through_rate: number
+    }[]
   }
 }
 
@@ -45,4 +65,16 @@ export const fetchPosts = async (): Promise<Post[]> => {
   )
   const { data } = await res.json()
   return [data]
+}
+
+// This is a mock function that simulates an API call to fetch a post
+export const fetchPost = async (id: string): Promise<Post> => {
+  const res = await fetch(
+    `https://backend.testeswaffle.org/webhooks/case/publication/teste/post/${id}`,
+    {
+      cache: 'force-cache',
+    },
+  )
+  const { data } = await res.json()
+  return data
 }
