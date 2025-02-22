@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { SignInForm } from './sign-in-form'
+import { SignInForm } from './_components/sign-in-form'
 
 export default function Page() {
   return (
