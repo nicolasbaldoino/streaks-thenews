@@ -1,4 +1,4 @@
-import { differenceInDays, isMonday, isSunday, startOfDay } from 'date-fns'
+import { differenceInDays, isMonday, isSunday } from 'date-fns'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
@@ -99,7 +99,7 @@ export async function GET(request: NextRequest) {
 }
 
 const checkAndUpdateStreak = async (userId: string) => {
-  const today = startOfDay(new Date())
+  const today = new Date()
 
   if (isSunday(today)) return
 
@@ -109,7 +109,7 @@ const checkAndUpdateStreak = async (userId: string) => {
   })
 
   if (lastStreak) {
-    const lastDate = startOfDay(new Date(lastStreak.lastStreakDate))
+    const lastDate = new Date(lastStreak.lastStreakDate)
     const diffDays = differenceInDays(today, lastDate)
 
     if (diffDays === 0) {
