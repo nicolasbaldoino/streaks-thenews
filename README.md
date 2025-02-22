@@ -31,11 +31,11 @@ To run the project locally, follow the steps below:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/streaks-the-news.git
+   git clone https://github.com/nicolasbaldoino/streaks-thenews.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd streaks-the-news
+   cd streaks-thenews
    ```
 3. Install dependencies:
    ```bash
@@ -72,11 +72,15 @@ src/                                   # Source files
 │   │   │   ├── users/                 # User management
 │   │   │   │   ├── _components/       # Users UI components
 │   │   │   │   └── page.tsx           # Users page logic
+│   │   │   ├── posts/                 # Post pages
+│   │   │   │   └── [id]/              # Dynamic post pages
+│   │   │   │       └── page.tsx       # Post detail page logic
 │   │   │   └── layout.tsx             # Admin layout
 │   │   ├── (main)/                    # Main application pages
 │   │   │   ├── _components/           # Main UI components
 │   │   │   └── page.tsx               # Main page logic
-│   │   └── layout.tsx                 # Application layout
+│   │   ├── layout.tsx                 # Application layout
+│   │   └── not-found.tsx              # 404 Not Found page
 │   ├── api/                           # API routes
 │   │   ├── auth/                      # Authentication API
 │   │   │   └── [...nextauth]/         # NextAuth API route
@@ -90,13 +94,13 @@ src/                                   # Source files
 │       │   └── page.tsx               # Login page logic
 │       └── layout.tsx                 # Authentication layout
 ├── components/                        # Shared UI components
-│   └── ui/                            # UI elements library
+│   └── ui/                            # UI elements library (buttons, modals, etc.)
 ├── hooks/                             # Custom React hooks
 ├── lib/                               # Utility functions and configurations
 │   ├── auth-config.ts                 # Authentication configuration
 │   ├── db.ts                          # Database connection
 │   └── utils.ts                       # Helper functions
-└── middleware.ts                      # Global middleware
+└── middleware.ts                      # Global middleware (e.g., auth)
 ```
 
 ## Contribution
