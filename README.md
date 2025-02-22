@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Streaks - The News
 
-## Getting Started
+Track your daily streak and monitor your newsletter reading progress.
 
-First, run the development server:
+## Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Streaks - The News is an application that allows you to track your daily reading streak and monitor your newsletter reading progress. The project is developed using modern technologies to ensure a smooth and intuitive experience.
+
+## Technologies
+
+### Languages & Frameworks
+- TypeScript - Strongly typed language for JavaScript.
+- React - Library for building user interfaces.
+- Next.js 15 - React framework with server-side rendering.
+- TailwindCSS - Utility-first CSS framework.
+
+### Services & Libraries
+- Shadcn - UI components for React.
+- Prisma.io - ORM for database management.
+- NextAuth - Authentication library for Next.js.
+
+### Database
+- PostgreSQL 16 - Relational database used for storing application data.
+
+### Environment & Runtime
+- Node.js 20.18 - JavaScript runtime environment.
+
+## Installation
+
+To run the project locally, follow the steps below:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/streaks-the-news.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd streaks-the-news
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Configure environment variables:
+   Create a `.env` file in the project's root directory and add the necessary configurations for NextAuth and the PostgreSQL database.
+
+5. Run database migrations:
+   ```bash
+   npx prisma migrate dev
+   ```
+6. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Project Structure
+
+```
+src/                                   # Source files
+│
+├── actions/                           # Server-side actions
+├── app/                               # Application main structure
+│   ├── (app)/                         # Core application pages
+│   │   ├── (admin)/                   # Admin panel
+│   │   │   ├── _components/           # Admin UI components
+│   │   │   ├── analytics/             # Analytics page
+│   │   │   │   ├── _components/       # Analytics UI components
+│   │   │   │   └── page.tsx           # Analytics page logic
+│   │   │   ├── levels/                # User level management
+│   │   │   │   ├── _components/       # Level UI components
+│   │   │   │   └── page.tsx           # Levels page logic
+│   │   │   ├── users/                 # User management
+│   │   │   │   ├── _components/       # Users UI components
+│   │   │   │   └── page.tsx           # Users page logic
+│   │   │   └── layout.tsx             # Admin layout
+│   │   ├── (main)/                    # Main application pages
+│   │   │   ├── _components/           # Main UI components
+│   │   │   └── page.tsx               # Main page logic
+│   │   └── layout.tsx                 # Application layout
+│   ├── api/                           # API routes
+│   │   ├── auth/                      # Authentication API
+│   │   │   └── [...nextauth]/         # NextAuth API route
+│   │   │       └── route.ts           # NextAuth route
+│   │   └── webhooks/                  # Webhooks for integrations
+│   │       └── waffle/                # Waffle webhook
+│   │           └── route.ts           # Webhook route logic
+│   └── auth/                          # Authentication pages
+│       ├── login/                     # Login page
+│       │   ├── _components/           # Login UI components
+│       │   └── page.tsx               # Login page logic
+│       └── layout.tsx                 # Authentication layout
+├── components/                        # Shared UI components
+│   └── ui/                            # UI elements library
+├── hooks/                             # Custom React hooks
+├── lib/                               # Utility functions and configurations
+│   ├── auth-config.ts                 # Authentication configuration
+│   ├── db.ts                          # Database connection
+│   └── utils.ts                       # Helper functions
+└── middleware.ts                      # Global middleware
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contribution
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Contributions are welcome! Feel free to open issues and submit pull requests.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## License
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project does not have a specific license.
