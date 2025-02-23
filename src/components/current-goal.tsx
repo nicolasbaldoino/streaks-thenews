@@ -1,8 +1,8 @@
 import { Streak } from '@prisma/client'
 import {
-  addDays,
   eachDayOfInterval,
   endOfWeek,
+  isSunday,
   isWithinInterval,
   startOfWeek,
 } from 'date-fns'
@@ -10,14 +10,16 @@ import {
 export const CurrentGoal = ({ streaks }: { streaks: Streak[] }) => {
   // Get current week's date range
   const today = new Date()
-  const weekStart = startOfWeek(today, { weekStartsOn: 1 })
-  const weekEnd = addDays(endOfWeek(today, { weekStartsOn: 1 }), -1)
+  const weekStart = startOfWeek(today)
+  const weekEnd = endOfWeek(today)
 
   const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd })
 
   // Calculate completed days this week
   const completedDays = weekDays.filter((day) => {
     return streaks.some((streak) => {
+      if (isSunday(day)) return false
+
       const streakStart = new Date(streak.startStreakDate)
       const streakEnd = new Date(streak.lastStreakDate)
       return isWithinInterval(day, { start: streakStart, end: streakEnd })
