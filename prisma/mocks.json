@@ -1,0 +1,30 @@
+{
+  "utmSource": [
+    "google",
+    "facebook",
+    "instagram",
+    "linkedin",
+    "twitter"
+  ],
+  "utmMedium": [
+    "cpc",
+    "organic",
+    "referral",
+    "social",
+    "email"
+  ],
+  "utmCampaign": [
+    "black-friday",
+    "cyber-monday",
+    "christmas-sale",
+    "new-year-promo",
+    "summer-sale"
+  ],
+  "utmChannel": [
+    "social-media",
+    "search-engine",
+    "email-marketing",
+    "video-ads",
+    "display-ads"
+  ]
+}

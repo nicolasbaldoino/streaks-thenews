@@ -33,7 +33,7 @@ export const ViewsByCampaign = ({
 }: {
   viewsByCampaign: any
 }) => {
-  const [timeRange, setTimeRange] = React.useState('30d')
+  const [timeRange, setTimeRange] = React.useState('7d')
 
   const formattedData = viewsByCampaign.map((item: any) => ({
     date: format(new Date(item.createdAt), 'yyyy-MM-dd'),
@@ -152,15 +152,10 @@ export const ViewsByCampaign = ({
               <Line
                 key={label}
                 dataKey={label || 'none'}
-                type="monotone"
+                type="linear"
                 stroke={`hsl(var(--chart-${index + 1}))`}
                 strokeWidth={2}
-                dot={{
-                  fill: `hsl(var(--chart-${index + 1}))`,
-                }}
-                activeDot={{
-                  r: 6,
-                }}
+                dot={false}
               />
             ))}
             <ChartLegend content={<ChartLegendContent />} />

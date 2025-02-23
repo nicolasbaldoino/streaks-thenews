@@ -10,10 +10,6 @@ export default withAuth(
       if (pathname.startsWith('/auth')) {
         return NextResponse.redirect(new URL('/', nextUrl))
       }
-
-      if (pathname.startsWith('/dashboard') && token.role !== 'ADMIN') {
-        return NextResponse.redirect(new URL('/', nextUrl))
-      }
     }
   },
   {

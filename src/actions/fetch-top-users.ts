@@ -1,5 +1,6 @@
 'use server'
 
+import { dailyStreaks } from '@/lib/daily-streaks'
 import { db } from '@/lib/db'
 
 type UserWithStreak = {
@@ -26,7 +27,9 @@ export const fetchTopUsers = async () => {
           s.last_streak_date,
           s.created_at AS streak_created_at,
           s.updated_at AS streak_updated_at,
-          EXTRACT(DAY FROM (s.last_streak_date - s.start_streak_date)) AS date_diff
+          EXTRACT(DAY FROM (s.last_streak_date - s.start_streak_date)) - 
+          (SELECT COUNT(*) FROM generate_series(s.start_streak_date, s.last_streak_date, '1 day'::interval) AS days
+           WHERE EXTRACT(DOW FROM days) = 0) AS date_diff
     FROM users u
     LEFT JOIN LATERAL (
       SELECT s.*
@@ -62,6 +65,19 @@ export const fetchTopUsers = async () => {
       dateDiff: user.date_diff,
     },
   }))
+
+  formattedResult.sort((a, b) =>
+    !a.streak || !b.streak
+      ? 1
+      : dailyStreaks(
+          new Date(b.streak.lastStreakDate),
+          new Date(b.streak.startStreakDate),
+        ) -
+        dailyStreaks(
+          new Date(a.streak.lastStreakDate),
+          new Date(a.streak.startStreakDate),
+        ),
+  )
 
   return formattedResult as UserWithStreak[]
 }

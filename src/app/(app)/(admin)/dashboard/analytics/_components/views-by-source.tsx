@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/select'
 
 export const ViewsBySource = ({ viewsBySource }: { viewsBySource: any }) => {
-  const [timeRange, setTimeRange] = React.useState('30d')
+  const [timeRange, setTimeRange] = React.useState('7d')
 
   const formattedData = viewsBySource.map((item: any) => ({
     date: format(new Date(item.createdAt), 'yyyy-MM-dd'),
@@ -148,15 +148,10 @@ export const ViewsBySource = ({ viewsBySource }: { viewsBySource: any }) => {
               <Line
                 key={label}
                 dataKey={label || 'none'}
-                type="monotone"
+                type="linear"
                 stroke={`hsl(var(--chart-${index + 1}))`}
                 strokeWidth={2}
-                dot={{
-                  fill: `hsl(var(--chart-${index + 1}))`,
-                }}
-                activeDot={{
-                  r: 6,
-                }}
+                dot={false}
               />
             ))}
             <ChartLegend content={<ChartLegendContent />} />

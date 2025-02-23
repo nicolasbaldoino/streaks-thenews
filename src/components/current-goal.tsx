@@ -1,5 +1,6 @@
 import { Streak } from '@prisma/client'
 import {
+  addDays,
   eachDayOfInterval,
   endOfWeek,
   isWithinInterval,
@@ -9,8 +10,8 @@ import {
 export const CurrentGoal = ({ streaks }: { streaks: Streak[] }) => {
   // Get current week's date range
   const today = new Date()
-  const weekStart = startOfWeek(today, { weekStartsOn: 0 })
-  const weekEnd = endOfWeek(today, { weekStartsOn: 0 })
+  const weekStart = startOfWeek(today, { weekStartsOn: 1 })
+  const weekEnd = addDays(endOfWeek(today, { weekStartsOn: 1 }), -1)
 
   const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd })
 
@@ -24,7 +25,7 @@ export const CurrentGoal = ({ streaks }: { streaks: Streak[] }) => {
   }).length
 
   // Calculate the percentage for the progress ring
-  const total = 7 // Week has 7 days
+  const total = 6 // Week has 6 days
   const percentage = (completedDays / total) * 100
   const radius = 35
   const circumference = 2 * Math.PI * radius

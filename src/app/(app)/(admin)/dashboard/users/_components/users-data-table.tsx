@@ -104,6 +104,25 @@ export const columns: ColumnDef<User>[] = [
     ),
   },
   {
+    accessorKey: 'highestStreak',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="-ml-4"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Highest Streak
+          <ArrowUpDown />
+        </Button>
+      )
+    },
+    cell: ({ row }) => (
+      <div className="text-sm lowercase">{row.getValue('highestStreak')}</div>
+    ),
+  },
+  {
     accessorKey: 'role',
     header: ({ column }) => {
       return (
