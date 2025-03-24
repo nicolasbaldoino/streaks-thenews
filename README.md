@@ -31,7 +31,7 @@ To run the project locally, follow the steps below:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/streaks-the-news.git
+   git clone https://github.com/nicolasbaldoino/streaks-the-news.git
    ```
 2. Navigate to the project directory:
    ```bash
