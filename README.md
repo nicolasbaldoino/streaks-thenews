@@ -31,37 +31,18 @@ To run the project locally, follow the steps below:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/nicolasbaldoino/streaks-thenews.git
+   git clone https://github.com/yourusername/streaks-the-news.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd streaks-thenews
+   cd streaks-the-news
    ```
 3. Install dependencies:
    ```bash
    npm install
    ```
-4. Configure environment variables.
-
-   Create a `.env` file in the project's root directory and add the following variables for testing purposes during development:
-
-   ```bash
-   # Database - PostgreSQL
-   DATABASE_URL=postgresql://postgres:supersecret@localhost:5432/default
-
-   # NextAuth - Administrative user authentication
-   NEXTAUTH_URL=http://localhost:3000
-   NEXTAUTH_SECRET=supersecret
-
-   # SMTP - Sending transactional emails
-   EMAIL_SERVER_HOST=smtp.mailersend.net
-   EMAIL_SERVER_PORT=587
-   EMAIL_SERVER_USER=MS_MNoKsQ@trial-ynrw7gyod6kl2k8e.mlsender.net
-   EMAIL_SERVER_PASSWORD=mssp.0DjAY59.k68zxl2evkklj905.8puLmsA
-   EMAIL_FROM=streaks - the news <MS_MNoKsQ@trial-ynrw7gyod6kl2k8e.mlsender.net>
-   ```
-
-   These variables are configured for a local development environment and can be changed as needed for your production environment.
+4. Configure environment variables:
+   Create a `.env` file in the project's root directory and add the necessary configurations for NextAuth and the PostgreSQL database.
 
 5. Run database migrations:
    ```bash
@@ -105,8 +86,6 @@ src/                                   # Source files
 │   │   │   └── [...nextauth]/         # NextAuth API route
 │   │   │       └── route.ts           # NextAuth route
 │   │   └── webhooks/                  # Webhooks for integrations
-│   │       └── waffle/                # Waffle webhook
-│   │           └── route.ts           # Webhook route logic
 │   └── auth/                          # Authentication pages
 │       ├── login/                     # Login page
 │       │   ├── _components/           # Login UI components
