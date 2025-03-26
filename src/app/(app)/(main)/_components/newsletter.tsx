@@ -16,8 +16,8 @@ export const Newsletter = async () => {
 
   if (session?.user?.email) {
     // Check if user is subscribed (API mock)
-    const data = await fetchRead({ email: session?.user?.email })
-    isSubscribed = Boolean(data?.success)
+    // const data = await fetchRead({ email: session?.user?.email })
+    isSubscribed = false // Boolean(data?.success)
   }
 
   return (
